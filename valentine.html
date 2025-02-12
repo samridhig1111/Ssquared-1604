@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Special</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #fdf2f8;
+            font-family: 'Arial', sans-serif;
+            color: #831843;
+            overflow-x: hidden;
+        }
+
+        .valentine-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+        }
+
+        .title {
+            font-size: 4rem;
+            color: #be185d;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #9d174d;
+            font-style: italic;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .image-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .image-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .image-card:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Grid positioning */
+        .image-1 {
+            grid-column: 1 / 6;
+            grid-row: 1 / 4;
+            height: 600px;
+        }
+
+        .image-2 {
+            grid-column: 6 / 9;
+            grid-row: 1 / 3;
+            height: 400px;
+        }
+
+        .image-3 {
+            grid-column: 9 / 13;
+            grid-row: 1 / 2;
+            height: 250px;
+        }
+
+        .image-4 {
+            grid-column: 9 / 13;
+            grid-row: 2 / 4;
+            height: 350px;
+        }
+
+        .image-5 {
+            grid-column: 6 / 9;
+            grid-row: 3 / 4;
+            height: 200px;
+        }
+
+        .message-card {
+            grid-column: 1 / 13;
+            background: linear-gradient(135deg, #fbcfe8, #fce7f3);
+            padding: 3rem;
+            border-radius: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .love-message {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: #9d174d;
+            font-family: 'Georgia', serif;
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #be185d;
+            margin-top: 1.5rem;
+        }
+
+        .floating-hearts {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatHeart 6s ease-in-out infinite;
+            opacity: 0.3;
+            color: #be185d;
+        }
+
+        @keyframes floatHeart {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        .heart1 { top: 10%; left: 10%; animation-delay: 0s; }
+        .heart2 { top: 20%; right: 15%; animation-delay: 1s; }
+        .heart3 { bottom: 15%; left: 20%; animation-delay: 2s; }
+        .heart4 { bottom: 20%; right: 10%; animation-delay: 3s; }
+
+        @media (max-width: 1024px) {
+            .grid-layout {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .image-1 {
+                grid-column: 1 / 7;
+                grid-row: auto;
+                height: 400px;
+            }
+
+            .image-2, .image-3, .image-4, .image-5 {
+                grid-column: span 3;
+                grid-row: auto;
+                height: 300px;
+            }
+
+            .message-card {
+                grid-column: 1 / 7;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 3rem;
+            }
+
+            .image-2, .image-3, .image-4, .image-5 {
+                grid-column: 1 / 7;
+                height: 250px;
+            }
+
+            .love-message {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Decorative elements */
+        .corner-decoration {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #fecdd3 10%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .top-left { top: -100px; left: -100px; }
+        .top-right { top: -100px; right: -100px; }
+        .bottom-left { bottom: -100px; left: -100px; }
+        .bottom-right { bottom: -100px; right: -100px; }
+
+        .countdown-container {
+            text-align: center;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,192,203,0.3));
+            border-radius: 15px;
+            max-width: 800px;
+            box-shadow: 0 10px 20px rgba(190, 24, 93, 0.1);
+        }
+
+        .countdown-title {
+            color: #be185d;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .countdown-display {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            min-width: 100px;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(190, 24, 93, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #be185d;
+            margin-bottom: 0.5rem;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            color: #9d174d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 600px) {
+            .countdown-display {
+                gap: 1rem;
+            }
+
+            .countdown-item {
+                min-width: 80px;
+            }
+
+            .countdown-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="corner-decoration top-left"></div>
+    <div class="corner-decoration top-right"></div>
+    <div class="corner-decoration bottom-left"></div>
+    <div class="corner-decoration bottom-right"></div>
+
+    <div class="valentine-container">
+        <header class="header">
+            <h1 class="title">Will you be my forever❤?</h1>
+           
+        </header>
+        <div class="countdown-container">
+            <h2 class="countdown-title">Counting Down</h2>
+            <div class="countdown-display">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-layout">
+            <div class="image-card image-1">
+                <img src="images/WhatsApp Image 2025-01-19 at 08.14.56.jpeg" alt="Valentine Memory 1">
+            </div>
+            <div class="image-card image-2">
+                <img src="images/WhatsApp Image 2025-02-02 at 16.34.25.jpeg" alt="Valentine Memory 2">
+            </div>
+            <div class="image-card image-3">
+                <img src="images/WhatsApp Image 2025-02-02 at 16.41.19.jpeg" alt="Valentine Memory 3">
+            </div>
+            <div class="image-card image-4">
+                <img src="images/WhatsApp Image 2025-02-02 at 16.42.24.jpeg" alt="Valentine Memory 4">
+            </div>
+            <div class="image-card image-5">
+                <img src="images/WhatsApp Image 2025-02-02 at 16.44.18.jpeg" alt="Valentine Memory 5">
+            </div>
+
+            <div class="message-card">
+                <span class="floating-hearts heart1">❤</span>
+                <span class="floating-hearts heart2">❤</span>
+                <span class="floating-hearts heart3">❤</span>
+                <span class="floating-hearts heart4">❤</span>
+                
+                <div class="message-content">
+                    <p class="love-message">
+                        
+            I love you. You are the man of my dreams.
+            You are the strongest,smartest man I have ever known. I look up to you in amazement.
+            The more I get to know you, the harder I fall for you. 
+            I am not scared even a bit about anything knowing that I have you by my side. 
+
+                    </p>
+                    <div class="signature">With all my love,<br>Samridhi</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Countdown Timer JavaScript
+        function updateCountdown() {
+            const weddingDate = new Date('April 16, 2025 00:00:00').getTime();
+            
+            function update() {
+                const now = new Date().getTime();
+                const distance = weddingDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+                if (distance < 0) {
+                    clearInterval(timerInterval);
+                    document.querySelector('.countdown-display').innerHTML = 
+                        '<div class="countdown-item"><div class="countdown-number">❤️</div><div class="countdown-label">Just Married!</div></div>';
+                }
+            }
+
+            update(); // Initial call
+            const timerInterval = setInterval(update, 1000);
+        }
+
+        // Start the countdown when the page loads
+        document.addEventListener('DOMContentLoaded', updateCountdown);
+    </script>
+</body>
+</html>
